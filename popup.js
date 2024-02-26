@@ -1,15 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     var linksList = document.getElementById('links-list');
-    var linkInput = document.getElementById('link-input');
-    var addButton = document.getElementById('add-button');
-
-    addButton.addEventListener('click', function () {
-        var url = linkInput.value.trim();
-        if (url !== '') {
-            addLink(url);
-            linkInput.value = '';
-        }
-    });
 
     linksList.addEventListener('contextmenu', function (event) {
         event.preventDefault();
@@ -20,37 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
             animateCopy();
         }
     });
-
-    linksList.addEventListener('click', function (event) {
-        var target = event.target.closest('li');
-        if (target && event.target.classList.contains('delete-link')) {
-            target.remove();
-        }
-    });
-
-    function addLink(url) {
-        var li = document.createElement('li');
-        var icon = document.createElement('i');
-        icon.classList.add('fas', 'fa-external-link-alt');
-        var link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.textContent = url;
-        var deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('fas', 'fa-trash-alt', 'delete-link');
-        
-        // Using flexbox to align items
-        li.style.display = 'flex';
-        li.style.justifyContent = 'space-between';
-        li.style.alignItems = 'center';
-    
-        // Appending elements
-        li.appendChild(icon);
-        li.appendChild(link);
-        li.appendChild(deleteIcon);
-        linksList.appendChild(li);
-    }
-    
 
     function copyToClipboard(text) {
         var input = document.createElement('textarea');
@@ -75,14 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
         copyMessage.style.zIndex = '9999';
         copyMessage.style.opacity = '0';
         copyMessage.style.transition = 'opacity 0.5s ease-in-out';
-    
+
         document.body.appendChild(copyMessage);
-    
+
         // Triggering reflow to ensure the transition happens
         copyMessage.offsetHeight;
-    
+
         copyMessage.style.opacity = '1';
-    
+
         setTimeout(function() {
             copyMessage.style.opacity = '0';
             setTimeout(function() {
@@ -90,5 +49,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 500);
         }, 1500);
     }
-    
 });
